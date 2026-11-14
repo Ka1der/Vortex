@@ -37,10 +37,13 @@ public struct RoutingView: View {
                         // 1. Global Mode Segmented Control
                         modeSelectorCard
 
-                        // 2. Action Filter Chips
+                        // 2. Routing Databases (GeoIP / Geosite) Card
+                        RuleSetsCardView()
+
+                        // 3. Action Filter Chips
                         filterChipsRow
 
-                        // 3. Routing Rules List Card
+                        // 4. Routing Rules List Card
                         rulesListCard
 
                         Spacer(minLength: 30)
@@ -622,5 +625,214 @@ public struct EditRuleSheet: View {
         )
         tunnelManager.updateRule(updated)
         dismiss()
+    }
+}
+
+// MARK: - Rule-Sets (.srs) Card View
+
+/// Shadowrocket-styled card for GeoIP / Geosite binary databases (.srs)
+public struct RuleSetsCardView: View {
+    @State private var ruleSetManager = RuleSetManager.shared
+    @State private var statusFeedback: StatusFeedback? = nil
+
+    private struct StatusFeedback {
+        let isSuccess: Bool
+        let message: String
+    }
+
+    public init() {}
+
+    private func title(for tag: String) -> String {
+        switch tag {
+        case "geoip-ru": return "GeoIP Россия"
+        case "geosite-ru": return "Geosite Россия"
+        case "geosite-ads": return "Geosite Реклама"
+        default: return tag
+        }
+    }
+
+    private func formatKB(_ bytes: Int64) -> String {
+        guard bytes > 0 else { return "0.0 КБ" }
+        let kb = Double(bytes) / 1024.0
+        return String(format: "%.1f КБ", kb)
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            // Header
+            HStack {
+                Image(systemName: "arrow.triangle.branch")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(Theme.orange)
+
+                Text("Базы маршрутизации (GeoIP / Geosite)")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.white)
+
+                Spacer()
+
+                if ruleSetManager.isUpdating {
+                    ProgressView()
+                        .scaleEffect(0.75)
+                        .tint(Theme.orange)
+                }
+            }
+
+            // File status rows
+            VStack(spacing: 8) {
+                ForEach(RuleSetManager.standardRuleSets, id: \.tag) { item in
+                    let isAvailable = RuleSetManager.isRuleSetAvailable(tag: item.tag)
+                    let size = ruleSetManager.fileSizes[item.tag] ?? 0
+
+                    HStack(spacing: 10) {
+                        Image(systemName: isAvailable ? "checkmark.circle.fill" : "xmark.circle.fill")
+                            .font(.system(size: 14))
+                            .foregroundStyle(isAvailable ? Theme.green : Theme.red)
+
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(title(for: item.tag))
+                                .font(.footnote)
+                                .fontWeight(.medium)
+                                .foregroundStyle(Color.white)
+
+                            Text(item.filename)
+                                .font(.system(size: 11, design: .monospaced))
+                                .foregroundStyle(Theme.secondaryText)
+                        }
+
+                        Spacer()
+
+                        Text(isAvailable ? formatKB(size) : "Не найдено")
+                            .font(.system(size: 12, weight: .medium, design: .monospaced))
+                            .foregroundStyle(isAvailable ? Theme.secondaryText : Theme.red)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+                    .background(Theme.secondaryCard.opacity(0.6))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+            }
+
+            Rectangle()
+                .fill(Theme.divider.opacity(0.5))
+                .frame(height: 0.5)
+
+            // Auto-update toggle
+            Toggle(isOn: $ruleSetManager.autoUpdateRuleSets) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Автообновление баз (раз в 7 дней)")
+                        .font(.footnote)
+                        .fontWeight(.medium)
+                        .foregroundStyle(Color.white)
+
+                    Text("Синхронизация с GitHub / CDN при старте")
+                        .font(.caption2)
+                        .foregroundStyle(Theme.secondaryText)
+                }
+            }
+            .tint(Theme.orange)
+
+            Rectangle()
+                .fill(Theme.divider.opacity(0.5))
+                .frame(height: 0.5)
+
+            // Last updated date
+            HStack {
+                HStack(spacing: 6) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(.caption2)
+                        .foregroundStyle(Theme.secondaryText)
+
+                    Text("Последнее обновление")
+                        .font(.footnote)
+                        .foregroundStyle(Theme.secondaryText)
+                }
+
+                Spacer()
+
+                if let date = ruleSetManager.lastUpdateDate {
+                    Text(date.formatted(date: .abbreviated, time: .shortened))
+                        .font(.system(size: 12, weight: .medium, design: .monospaced))
+                        .foregroundStyle(Color.white)
+                } else {
+                    Text("Встроенная версия")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Theme.orange)
+                }
+            }
+
+            // Update button
+            Button {
+                Task {
+                    statusFeedback = nil
+                    let ok = await ruleSetManager.updateAllRuleSets(force: true)
+                    withAnimation {
+                        if ok {
+                            statusFeedback = StatusFeedback(
+                                isSuccess: true,
+                                message: "Базы правил успешно обновлены"
+                            )
+                        } else {
+                            statusFeedback = StatusFeedback(
+                                isSuccess: false,
+                                message: ruleSetManager.lastErrorMessage ?? "Ошибка скачивания баз"
+                            )
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 8) {
+                    if ruleSetManager.isUpdating {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                            .tint(Color.white)
+                        Text("Загрузка баз...")
+                            .font(.footnote)
+                            .fontWeight(.medium)
+                            .foregroundStyle(Color.white)
+                    } else {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.footnote)
+                        Text("Обновить базы сейчас")
+                            .font(.footnote)
+                            .fontWeight(.medium)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(Theme.secondaryCard)
+                .foregroundStyle(ruleSetManager.isUpdating ? Color.white : Theme.orange)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(ruleSetManager.isUpdating ? Color.clear : Theme.orange.opacity(0.35), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            .disabled(ruleSetManager.isUpdating)
+
+            // Status feedback message
+            if let feedback = statusFeedback {
+                HStack(spacing: 6) {
+                    Image(systemName: feedback.isSuccess ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(feedback.isSuccess ? Theme.green : Theme.red)
+
+                    Text(feedback.message)
+                        .font(.caption)
+                        .foregroundStyle(feedback.isSuccess ? Theme.green : Theme.red)
+                }
+                .padding(.horizontal, 4)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .padding(14)
+        .background(Theme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Theme.secondaryCard, lineWidth: 1)
+        )
     }
 }

@@ -3,7 +3,6 @@ import SwiftUI
 /// Settings view: MTU, DNS split-routing, VK Call pre-auth helper, and diagnostic controls
 public struct SettingsView: View {
     @Bindable var tunnelManager: TunnelManager
-    @State private var ruleSetManager = RuleSetManager.shared
 
     @State private var mtuValue: Double = Double(AppGroup.getMTU())
     @State private var remoteDns: String = AppGroup.getRemoteDNS()
@@ -29,7 +28,7 @@ public struct SettingsView: View {
                         dnsSectionCard
 
                         // 3. RuleSets (.srs) Binary Databases Card
-                        ruleSetsSectionCard
+                        RuleSetsCardView()
 
                         // 4. VK Call Helper Card
                         vkCallSectionCard
@@ -202,92 +201,6 @@ public struct SettingsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 6))
         }
         .buttonStyle(.plain)
-    }
-
-    // MARK: - Rule-Sets Card
-
-    private var ruleSetsSectionCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Image(systemName: "arrow.triangle.branch")
-                    .foregroundStyle(Theme.orange)
-                Text("Базы маршрутизации (.srs)")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.white)
-
-                Spacer()
-
-                if ruleSetManager.isUpdating {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                } else {
-                    Button("Обновить") {
-                        Task {
-                            let ok = await ruleSetManager.updateAllRuleSets(force: true)
-                            if ok {
-                                showToast("Базы правил успешно обновлены")
-                            } else if let err = ruleSetManager.lastErrorMessage {
-                                showToast(err)
-                            }
-                        }
-                    }
-                    .font(.footnote)
-                    .fontWeight(.medium)
-                    .foregroundStyle(Theme.orange)
-                }
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(RuleSetManager.standardRuleSets, id: \.tag) { item in
-                    HStack {
-                        Text(item.filename)
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundStyle(Theme.secondaryText)
-                        Spacer()
-                        if let size = ruleSetManager.fileSizes[item.tag] {
-                            Text(formatBytes(size))
-                                .font(.system(.caption, design: .monospaced))
-                                .foregroundStyle(Theme.green)
-                        } else {
-                            Text("Отсутствует")
-                                .font(.caption2)
-                                .foregroundStyle(Theme.red)
-                        }
-                    }
-                }
-            }
-            .padding(10)
-            .background(Theme.secondaryCard.opacity(0.5))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-
-            HStack {
-                Toggle("Автообновление (каждые 7 дней)", isOn: $ruleSetManager.autoUpdateRuleSets)
-                    .font(.caption)
-                    .foregroundStyle(Color.white)
-                    .tint(Theme.orange)
-            }
-
-            if let last = ruleSetManager.lastUpdateDate {
-                Text("Обновлено: \(last.formatted(date: .abbreviated, time: .shortened))")
-                    .font(.caption2)
-                    .foregroundStyle(Theme.secondaryText)
-            }
-        }
-        .padding(16)
-        .background(Theme.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(Theme.secondaryCard, lineWidth: 1)
-        )
-    }
-
-    private func formatBytes(_ bytes: Int64) -> String {
-        let formatter = ByteCountFormatter()
-        formatter.allowedUnits = [.useKB, .useMB]
-        formatter.countStyle = .file
-        return formatter.string(fromByteCount: bytes)
     }
 
     // MARK: - VK Call Section

@@ -1,17 +1,13 @@
-//
-//  VortexApp.swift
-//  Vortex
-//
-//  Created by Kaider on 13.11.2026.
-//
-
 import SwiftUI
 
 @main
 struct VortexApp: App {
+    @State private var tunnelManager = TunnelManager.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView(tunnelManager: tunnelManager)
+                .preferredColorScheme(.dark)
         }
     }
 }

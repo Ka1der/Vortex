@@ -3,254 +3,606 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 110;
+	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		00BE4115821EF2C7C60B8F38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0CA708C501DCAE350AC640 /* Theme.swift */; };
+		04A0790B7B5E6F4C7987044A /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0A88F0CA02A2352920E780 /* PacketTunnelProvider.swift */; };
+		0781A930EE3153E66F4E3098 /* ServerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287BE5D0A71CEA5F5547632 /* ServerNode.swift */; };
+		0DB7D24FE8DEA3EFAADB9E1C /* SubscriptionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DBFB13D834634F159E0C2D /* SubscriptionParser.swift */; };
+		0FFA5AE5EBA70C24E53788AA /* RoutingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CE864A797D00BB39C78023 /* RoutingRule.swift */; };
+		130B1ACB76B873DB6AAC3BD3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50497118D897C91212495A /* SettingsView.swift */; };
+		148B9E8ED3D4776A9D52D195 /* VortexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF3BB69C7C7E32E7BAE87D /* VortexApp.swift */; };
+		1A2E15794238B73449D7CE4E /* ServerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB73DF124DD4F59C82CC491 /* ServerNode.swift */; };
+		1A96427472E573468841199B /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7F7C9346A0C83172B3F01 /* ConfigBuilder.swift */; };
+		2035A55F298F99C1F1612549 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50497118D897C91212495A /* SettingsView.swift */; };
+		21CB4A3D1581AF1E27A9BD31 /* SubscriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FC6112F027F4A184BD312 /* SubscriptionGroup.swift */; };
+		22CB3C8A9E011F466C96AF2A /* RoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8F98A183861E571FF8BE37 /* RoutingView.swift */; };
+		26B2E805F44EC8A635F2B188 /* TunnelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7D901AE50E49CB7EBD847B /* TunnelManager.swift */; };
+		2A17722E158A5C2FDD7EAAFC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0CA708C501DCAE350AC640 /* Theme.swift */; };
+		3383924B69275B67474101CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2D22005CB2C6DCD14BBE64 /* ContentView.swift */; };
+		3498DAAA80E410E0218CCE33 /* MacTunnelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A8578971A3DF053C3AD67D /* MacTunnelEngine.swift */; };
+		3A6E43C4FB9DB51B08243A08 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93ECD752CA2D1C6C91799B3F /* QRCodeScannerView.swift */; };
+		3EC4626833F1C7B4190597E9 /* Plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 77B22729B20FCD7FBC00446D /* Plan.md */; };
+		425B03F1B2C25A6FA35E6F3E /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0807E48C00F449F799669105 /* AppGroup.swift */; };
+		47256CD71BBA2A8F6518704F /* TunnelEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87002AFA5CB814FAC15FDEF4 /* TunnelEngineProtocol.swift */; };
+		4DD8E2D61C4416A77025AFFF /* NetworkPingTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C71444417C32463F89CEB6 /* NetworkPingTester.swift */; };
+		52E23391284D980F8450A0A7 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93ECD752CA2D1C6C91799B3F /* QRCodeScannerView.swift */; };
+		5BA302F516978124E597F841 /* RoutingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769A6847B952B19C2144175 /* RoutingRule.swift */; };
+		6147388E879F9212E7F51791 /* SubscriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FC6112F027F4A184BD312 /* SubscriptionGroup.swift */; };
+		68ED90951DFB36A0D012FF5A /* NetworkPingTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74200C2B2A89E5D6D1D06CE /* NetworkPingTester.swift */; };
+		6BF8D0F6FDE0EB57F7CABA93 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4A2FD8230CD3006B00D0A8 /* MainTabView.swift */; };
+		6E8DBB8FDFE3B139CF41B840 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2D22005CB2C6DCD14BBE64 /* ContentView.swift */; };
+		7351E664A764928DD9EAF200 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0363E646B3BB07466EC82F6 /* AppGroup.swift */; };
+		74664EF61AB5A36F8C949984 /* NodeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE9E674745CB9B336AF4BA /* NodeEditorView.swift */; };
+		7B3F5E0AFA8E345D7CC48D11 /* SubscriptionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DBFB13D834634F159E0C2D /* SubscriptionParser.swift */; };
+		7CE80389CF0E400A92AB92E1 /* MacTunnelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5198C142F75F1AF351871E84 /* MacTunnelEngine.swift */; };
+		82385E8447325FF3C8497BB1 /* VortexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF3BB69C7C7E32E7BAE87D /* VortexApp.swift */; };
+		864CC495633EFBFF1B666689 /* DataStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC4CE682B598AAE522FB0B /* DataStatsView.swift */; };
+		86549269B798DE56BA04A496 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4A2FD8230CD3006B00D0A8 /* MainTabView.swift */; };
+		866AD8679D590257B0601132 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 153F6D4CB01AB96768A70AD8 /* Assets.xcassets */; };
+		86F4DD2F422C0945A2A60411 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */; };
+		87A329A2AD5EE57EC6E258A2 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87DE20B5281B0A7849CC8DBF /* RoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8F98A183861E571FF8BE37 /* RoutingView.swift */; };
+		8BF70601B8F97B0E6C9C5C29 /* Libbox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */; };
+		8D24382A2EE75C9F554B6DB7 /* Libbox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9761EC80F9E4BC000597A154 /* TunnelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A5A9F40E3316D633240CB3 /* TunnelManager.swift */; };
+		982B5C9B197579D37A58638B /* ServerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287BE5D0A71CEA5F5547632 /* ServerNode.swift */; };
+		A7E78EFE89D9B257D71ABC7B /* TunnelEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28CF05EEC001349764C54B /* TunnelEngineProtocol.swift */; };
+		A7F82ED33F88F1683F3E5E9F /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CE548832A7036E6FEDFD8 /* ConfigBuilder.swift */; };
+		A8B3BE1AD0CEFA08D1047612 /* NetworkPingTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C71444417C32463F89CEB6 /* NetworkPingTester.swift */; };
+		ACEE47A7D7C59648CDB9D2BC /* SubscriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CC7BDD99FF6A56F984280E /* SubscriptionGroup.swift */; };
+		B1BEEAEBA962A7D498095FDA /* MacTunnelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5198C142F75F1AF351871E84 /* MacTunnelEngine.swift */; };
+		C24AA7DC1CF8CA1874B47AA1 /* TunnelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7D901AE50E49CB7EBD847B /* TunnelManager.swift */; };
+		C2F2E2ADEE993D378D67D225 /* TunnelEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28CF05EEC001349764C54B /* TunnelEngineProtocol.swift */; };
+		C59CB3F3E3C3CA8B929897D7 /* SubscriptionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059D7CA9F1874D9B513FF292 /* SubscriptionParser.swift */; };
+		C9782C89310C2CFC21EA4B3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 153F6D4CB01AB96768A70AD8 /* Assets.xcassets */; };
+		C9ADE053F835A33A304982FB /* NodeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EE9E674745CB9B336AF4BA /* NodeEditorView.swift */; };
+		CBB14F0C22CFDE5692471CB3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A96D2431F6628CEAEA008E2 /* HomeView.swift */; };
+		CD764B3E1E17615B7A8E62BB /* DataStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC4CE682B598AAE522FB0B /* DataStatsView.swift */; };
+		D7BB0EFC14AA9F2DE3F2BEEC /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CE548832A7036E6FEDFD8 /* ConfigBuilder.swift */; };
+		D7EEBCAFF92C6BB02931C070 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A96D2431F6628CEAEA008E2 /* HomeView.swift */; };
+		D9E8273B33227F6F4CAD5BDD /* VortexTunnelExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F1E7CEB6D9294BA7FEDCF95A /* VortexTunnelExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DA2289F979DD7C254BC89ECD /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0807E48C00F449F799669105 /* AppGroup.swift */; };
+		E556EB612FCED3E65675B39B /* Plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 77B22729B20FCD7FBC00446D /* Plan.md */; };
+		FD627AFE1DD6BA2E81415CDD /* RoutingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769A6847B952B19C2144175 /* RoutingRule.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		C92F438A30A78400006EBDC4 /* PBXContainerItemProxy */ = {
+		3736D3BA86C50F3B85379952 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C92F437430A783FE006EBDC4 /* Project object */;
+			containerPortal = 7D927F64B6C4F00A05DEDE25 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C92F437B30A783FE006EBDC4;
-			remoteInfo = Vortex;
-		};
-		C92F439430A78400006EBDC4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C92F437430A783FE006EBDC4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C92F437B30A783FE006EBDC4;
-			remoteInfo = Vortex;
+			remoteGlobalIDString = 44D869F19BF021E560194930;
+			remoteInfo = VortexTunnelExtension;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		099CF9B1F1D3B51766629601 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				87A329A2AD5EE57EC6E258A2 /* Libbox.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A4CE008153F1AF73B1B963C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D9E8273B33227F6F4CAD5BDD /* VortexTunnelExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDA7409D1F658DD820EB8373 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8D24382A2EE75C9F554B6DB7 /* Libbox.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		C92F437C30A783FE006EBDC4 /* Vortex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C92F438930A78400006EBDC4 /* VortexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VortexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C92F439330A78400006EBDC4 /* VortexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VortexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00CC7BDD99FF6A56F984280E /* SubscriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionGroup.swift; sourceTree = "<group>"; };
+		059D7CA9F1874D9B513FF292 /* SubscriptionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionParser.swift; sourceTree = "<group>"; };
+		0807E48C00F449F799669105 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		0B7D901AE50E49CB7EBD847B /* TunnelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelManager.swift; sourceTree = "<group>"; };
+		153F6D4CB01AB96768A70AD8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		22BC3AEFE278CAB1429A2B0E /* Vortex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38A8578971A3DF053C3AD67D /* MacTunnelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacTunnelEngine.swift; sourceTree = "<group>"; };
+		3D50497118D897C91212495A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4A28CF05EEC001349764C54B /* TunnelEngineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelEngineProtocol.swift; sourceTree = "<group>"; };
+		4C5FC6112F027F4A184BD312 /* SubscriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionGroup.swift; sourceTree = "<group>"; };
+		5198C142F75F1AF351871E84 /* MacTunnelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacTunnelEngine.swift; sourceTree = "<group>"; };
+		52CF3BB69C7C7E32E7BAE87D /* VortexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VortexApp.swift; sourceTree = "<group>"; };
+		53B7F7C9346A0C83172B3F01 /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
+		59EE9E674745CB9B336AF4BA /* NodeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEditorView.swift; sourceTree = "<group>"; };
+		67C1D17C9DE37E94C7C77BA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		68CE864A797D00BB39C78023 /* RoutingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingRule.swift; sourceTree = "<group>"; };
+		6A0CA708C501DCAE350AC640 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		77B22729B20FCD7FBC00446D /* Plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Plan.md; sourceTree = "<group>"; };
+		7A96D2431F6628CEAEA008E2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7B4A2FD8230CD3006B00D0A8 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		827CE548832A7036E6FEDFD8 /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
+		85A5A9F40E3316D633240CB3 /* TunnelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelManager.swift; sourceTree = "<group>"; };
+		87002AFA5CB814FAC15FDEF4 /* TunnelEngineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelEngineProtocol.swift; sourceTree = "<group>"; };
+		90B545986246817B86CD909E /* VortexTunnelExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VortexTunnelExtension.entitlements; sourceTree = "<group>"; };
+		93ECD752CA2D1C6C91799B3F /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
+		9D2D22005CB2C6DCD14BBE64 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B287BE5D0A71CEA5F5547632 /* ServerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerNode.swift; sourceTree = "<group>"; };
+		C6BC4CE682B598AAE522FB0B /* DataStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStatsView.swift; sourceTree = "<group>"; };
+		C769A6847B952B19C2144175 /* RoutingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingRule.swift; sourceTree = "<group>"; };
+		CD7B5A4A1DA6682A82F7A3D4 /* Vortex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vortex.entitlements; sourceTree = "<group>"; };
+		DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Libbox.xcframework; path = Frameworks/Libbox.xcframework; sourceTree = "<group>"; };
+		E0363E646B3BB07466EC82F6 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		E5C71444417C32463F89CEB6 /* NetworkPingTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPingTester.swift; sourceTree = "<group>"; };
+		EE0A88F0CA02A2352920E780 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		EE8F98A183861E571FF8BE37 /* RoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingView.swift; sourceTree = "<group>"; };
+		EEDE102D974EF25826F85F42 /* VortexMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = VortexMac.app; path = Vortex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1DBFB13D834634F159E0C2D /* SubscriptionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionParser.swift; sourceTree = "<group>"; };
+		F1E7CEB6D9294BA7FEDCF95A /* VortexTunnelExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = VortexTunnelExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F74200C2B2A89E5D6D1D06CE /* NetworkPingTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPingTester.swift; sourceTree = "<group>"; };
+		FD948030D2D02364749D2F4F /* VortexMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VortexMac.entitlements; sourceTree = "<group>"; };
+		FDB73DF124DD4F59C82CC491 /* ServerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		C92F437E30A783FE006EBDC4 /* Vortex */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Vortex;
-			sourceTree = "<group>";
-		};
-		C92F438C30A78400006EBDC4 /* VortexTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VortexTests;
-			sourceTree = "<group>";
-		};
-		C92F439630A78400006EBDC4 /* VortexUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VortexUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		C92F437930A783FE006EBDC4 /* Frameworks */ = {
+		07EE2F520374083A28749B59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				8BF70601B8F97B0E6C9C5C29 /* Libbox.xcframework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C92F438630A78400006EBDC4 /* Frameworks */ = {
+		FFB7B2EC84BB8BA56E1D79D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				86F4DD2F422C0945A2A60411 /* Libbox.xcframework in Frameworks */,
 			);
-		};
-		C92F439030A78400006EBDC4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			files = (
-			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C92F437330A783FE006EBDC4 = {
+		084D58BE2F70150CE3BC6294 /* VPNController */ = {
 			isa = PBXGroup;
 			children = (
-				C92F437E30A783FE006EBDC4 /* Vortex */,
-				C92F438C30A78400006EBDC4 /* VortexTests */,
-				C92F439630A78400006EBDC4 /* VortexUITests */,
-				C92F437D30A783FE006EBDC4 /* Products */,
+				38A8578971A3DF053C3AD67D /* MacTunnelEngine.swift */,
+				F74200C2B2A89E5D6D1D06CE /* NetworkPingTester.swift */,
+				87002AFA5CB814FAC15FDEF4 /* TunnelEngineProtocol.swift */,
+				85A5A9F40E3316D633240CB3 /* TunnelManager.swift */,
+			);
+			path = VPNController;
+			sourceTree = "<group>";
+		};
+		0CB66F5437BD95E4ADEBBA49 = {
+			isa = PBXGroup;
+			children = (
+				DE749C145120BD340FF53048 /* Vortex */,
+				709503BA216F1161AA9C86FD /* VortexTunnelExtension */,
+				79F0ADF0FA17077EFE20C0B8 /* Frameworks */,
+				4F2CACCCB9118181BAD11E49 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C92F437D30A783FE006EBDC4 /* Products */ = {
+		0F1F4E0496868D750B2B05DD /* VPNController */ = {
 			isa = PBXGroup;
 			children = (
-				C92F437C30A783FE006EBDC4 /* Vortex.app */,
-				C92F438930A78400006EBDC4 /* VortexTests.xctest */,
-				C92F439330A78400006EBDC4 /* VortexUITests.xctest */,
+				5198C142F75F1AF351871E84 /* MacTunnelEngine.swift */,
+				E5C71444417C32463F89CEB6 /* NetworkPingTester.swift */,
+				4A28CF05EEC001349764C54B /* TunnelEngineProtocol.swift */,
+				0B7D901AE50E49CB7EBD847B /* TunnelManager.swift */,
+			);
+			path = VPNController;
+			sourceTree = "<group>";
+		};
+		204AD37029F92BEC5371D4D3 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A9309F5203CA647A1FB6A789 /* Config */,
+				5AF928FA2EFBB3BF00EBA3B3 /* Models */,
+				0F1F4E0496868D750B2B05DD /* VPNController */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		4F2CACCCB9118181BAD11E49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22BC3AEFE278CAB1429A2B0E /* Vortex.app */,
+				EEDE102D974EF25826F85F42 /* VortexMac.app */,
+				F1E7CEB6D9294BA7FEDCF95A /* VortexTunnelExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		57F7F6E1D839540AC33EB986 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C6BC4CE682B598AAE522FB0B /* DataStatsView.swift */,
+				7A96D2431F6628CEAEA008E2 /* HomeView.swift */,
+				7B4A2FD8230CD3006B00D0A8 /* MainTabView.swift */,
+				59EE9E674745CB9B336AF4BA /* NodeEditorView.swift */,
+				93ECD752CA2D1C6C91799B3F /* QRCodeScannerView.swift */,
+				EE8F98A183861E571FF8BE37 /* RoutingView.swift */,
+				3D50497118D897C91212495A /* SettingsView.swift */,
+				6A0CA708C501DCAE350AC640 /* Theme.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		59ED8EBC8C178C0155F390C5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E0363E646B3BB07466EC82F6 /* AppGroup.swift */,
+				53B7F7C9346A0C83172B3F01 /* ConfigBuilder.swift */,
+				059D7CA9F1874D9B513FF292 /* SubscriptionParser.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		5AF928FA2EFBB3BF00EBA3B3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C769A6847B952B19C2144175 /* RoutingRule.swift */,
+				B287BE5D0A71CEA5F5547632 /* ServerNode.swift */,
+				4C5FC6112F027F4A184BD312 /* SubscriptionGroup.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6F87DB625F921DB4308B4E5B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				59ED8EBC8C178C0155F390C5 /* Config */,
+				CA5605361EA86BD5AFB88701 /* Models */,
+				084D58BE2F70150CE3BC6294 /* VPNController */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		709503BA216F1161AA9C86FD /* VortexTunnelExtension */ = {
+			isa = PBXGroup;
+			children = (
+				67C1D17C9DE37E94C7C77BA4 /* Info.plist */,
+				EE0A88F0CA02A2352920E780 /* PacketTunnelProvider.swift */,
+				90B545986246817B86CD909E /* VortexTunnelExtension.entitlements */,
+				6F87DB625F921DB4308B4E5B /* Shared */,
+			);
+			path = VortexTunnelExtension;
+			sourceTree = "<group>";
+		};
+		79F0ADF0FA17077EFE20C0B8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DE2B1D12AFCFDB55893F3F3A /* Libbox.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9309F5203CA647A1FB6A789 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				0807E48C00F449F799669105 /* AppGroup.swift */,
+				827CE548832A7036E6FEDFD8 /* ConfigBuilder.swift */,
+				F1DBFB13D834634F159E0C2D /* SubscriptionParser.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		CA5605361EA86BD5AFB88701 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				68CE864A797D00BB39C78023 /* RoutingRule.swift */,
+				FDB73DF124DD4F59C82CC491 /* ServerNode.swift */,
+				00CC7BDD99FF6A56F984280E /* SubscriptionGroup.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DE749C145120BD340FF53048 /* Vortex */ = {
+			isa = PBXGroup;
+			children = (
+				153F6D4CB01AB96768A70AD8 /* Assets.xcassets */,
+				9D2D22005CB2C6DCD14BBE64 /* ContentView.swift */,
+				77B22729B20FCD7FBC00446D /* Plan.md */,
+				CD7B5A4A1DA6682A82F7A3D4 /* Vortex.entitlements */,
+				52CF3BB69C7C7E32E7BAE87D /* VortexApp.swift */,
+				FD948030D2D02364749D2F4F /* VortexMac.entitlements */,
+				204AD37029F92BEC5371D4D3 /* Shared */,
+				57F7F6E1D839540AC33EB986 /* Views */,
+			);
+			path = Vortex;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C92F437B30A783FE006EBDC4 /* Vortex */ = {
+		44D869F19BF021E560194930 /* VortexTunnelExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C92F439B30A78400006EBDC4 /* Build configuration list for PBXNativeTarget "Vortex" */;
+			buildConfigurationList = CA9668DB6DE279F9450DEA09 /* Build configuration list for PBXNativeTarget "VortexTunnelExtension" */;
 			buildPhases = (
-				C92F437830A783FE006EBDC4 /* Sources */,
-				C92F437930A783FE006EBDC4 /* Frameworks */,
-				C92F437A30A783FE006EBDC4 /* Resources */,
+				400C632D0996A6E6B42D9F4C /* Sources */,
+				FFB7B2EC84BB8BA56E1D79D3 /* Frameworks */,
+				FDA7409D1F658DD820EB8373 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
-			fileSystemSynchronizedGroups = (
-				C92F437E30A783FE006EBDC4 /* Vortex */,
+			dependencies = (
+			);
+			name = VortexTunnelExtension;
+			packageProductDependencies = (
+			);
+			productName = VortexTunnelExtension;
+			productReference = F1E7CEB6D9294BA7FEDCF95A /* VortexTunnelExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		60EAF32BEB9AF80722F43B0E /* Vortex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DE47E8BE5BE0A7A2EB8B4E2 /* Build configuration list for PBXNativeTarget "Vortex" */;
+			buildPhases = (
+				E51A05B1913ABB1FAA6EBB24 /* Sources */,
+				4F6440388F4C27DC21DF2BDF /* Resources */,
+				8A4CE008153F1AF73B1B963C /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6EE601DC302474B14B3D9ADA /* PBXTargetDependency */,
 			);
 			name = Vortex;
+			packageProductDependencies = (
+			);
 			productName = Vortex;
-			productReference = C92F437C30A783FE006EBDC4 /* Vortex.app */;
+			productReference = 22BC3AEFE278CAB1429A2B0E /* Vortex.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C92F438830A78400006EBDC4 /* VortexTests */ = {
+		77593FADF9AFBD9E8C7F400A /* VortexMac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C92F439E30A78400006EBDC4 /* Build configuration list for PBXNativeTarget "VortexTests" */;
+			buildConfigurationList = F100B0957434F8E242393850 /* Build configuration list for PBXNativeTarget "VortexMac" */;
 			buildPhases = (
-				C92F438530A78400006EBDC4 /* Sources */,
-				C92F438630A78400006EBDC4 /* Frameworks */,
-				C92F438730A78400006EBDC4 /* Resources */,
+				DF32F9C35FA7CFB487C92C30 /* Sources */,
+				90BCF1E590F7351ADCB4FC78 /* Resources */,
+				07EE2F520374083A28749B59 /* Frameworks */,
+				099CF9B1F1D3B51766629601 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C92F438B30A78400006EBDC4 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				C92F438C30A78400006EBDC4 /* VortexTests */,
+			name = VortexMac;
+			packageProductDependencies = (
 			);
-			name = VortexTests;
-			productName = VortexTests;
-			productReference = C92F438930A78400006EBDC4 /* VortexTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C92F439230A78400006EBDC4 /* VortexUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C92F43A130A78400006EBDC4 /* Build configuration list for PBXNativeTarget "VortexUITests" */;
-			buildPhases = (
-				C92F438F30A78400006EBDC4 /* Sources */,
-				C92F439030A78400006EBDC4 /* Frameworks */,
-				C92F439130A78400006EBDC4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C92F439530A78400006EBDC4 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C92F439630A78400006EBDC4 /* VortexUITests */,
-			);
-			name = VortexUITests;
-			productName = VortexUITests;
-			productReference = C92F439330A78400006EBDC4 /* VortexUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			productName = VortexMac;
+			productReference = EEDE102D974EF25826F85F42 /* VortexMac.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C92F437430A783FE006EBDC4 /* Project object */ = {
+		7D927F64B6C4F00A05DEDE25 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2700;
-				LastUpgradeCheck = 2700;
-				TargetAttributes = {
-					C92F437B30A783FE006EBDC4 = {
-						CreatedOnToolsVersion = 27.0;
-					};
-					C92F438830A78400006EBDC4 = {
-						CreatedOnToolsVersion = 27.0;
-						TestTargetID = C92F437B30A783FE006EBDC4;
-					};
-					C92F439230A78400006EBDC4 = {
-						CreatedOnToolsVersion = 27.0;
-						TestTargetID = C92F437B30A783FE006EBDC4;
-					};
-				};
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = C92F437730A783FE006EBDC4 /* Build configuration list for PBXProject "Vortex" */;
+			buildConfigurationList = 42B7A853D0E7EF9E2BE3CFEB /* Build configuration list for PBXProject "Vortex" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = C92F437330A783FE006EBDC4;
+			mainGroup = 0CB66F5437BD95E4ADEBBA49;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = C92F437D30A783FE006EBDC4 /* Products */;
+			productRefGroup = 4F2CACCCB9118181BAD11E49 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C92F437B30A783FE006EBDC4 /* Vortex */,
-				C92F438830A78400006EBDC4 /* VortexTests */,
-				C92F439230A78400006EBDC4 /* VortexUITests */,
+				60EAF32BEB9AF80722F43B0E /* Vortex */,
+				44D869F19BF021E560194930 /* VortexTunnelExtension */,
+				77593FADF9AFBD9E8C7F400A /* VortexMac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C92F437A30A783FE006EBDC4 /* Resources */ = {
+		4F6440388F4C27DC21DF2BDF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				866AD8679D590257B0601132 /* Assets.xcassets in Resources */,
+				3EC4626833F1C7B4190597E9 /* Plan.md in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C92F438730A78400006EBDC4 /* Resources */ = {
+		90BCF1E590F7351ADCB4FC78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				C9782C89310C2CFC21EA4B3D /* Assets.xcassets in Resources */,
+				E556EB612FCED3E65675B39B /* Plan.md in Resources */,
 			);
-		};
-		C92F439130A78400006EBDC4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C92F437830A783FE006EBDC4 /* Sources */ = {
+		400C632D0996A6E6B42D9F4C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				7351E664A764928DD9EAF200 /* AppGroup.swift in Sources */,
+				1A96427472E573468841199B /* ConfigBuilder.swift in Sources */,
+				3498DAAA80E410E0218CCE33 /* MacTunnelEngine.swift in Sources */,
+				68ED90951DFB36A0D012FF5A /* NetworkPingTester.swift in Sources */,
+				04A0790B7B5E6F4C7987044A /* PacketTunnelProvider.swift in Sources */,
+				0FFA5AE5EBA70C24E53788AA /* RoutingRule.swift in Sources */,
+				1A2E15794238B73449D7CE4E /* ServerNode.swift in Sources */,
+				ACEE47A7D7C59648CDB9D2BC /* SubscriptionGroup.swift in Sources */,
+				C59CB3F3E3C3CA8B929897D7 /* SubscriptionParser.swift in Sources */,
+				47256CD71BBA2A8F6518704F /* TunnelEngineProtocol.swift in Sources */,
+				9761EC80F9E4BC000597A154 /* TunnelManager.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C92F438530A78400006EBDC4 /* Sources */ = {
+		DF32F9C35FA7CFB487C92C30 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				DA2289F979DD7C254BC89ECD /* AppGroup.swift in Sources */,
+				D7BB0EFC14AA9F2DE3F2BEEC /* ConfigBuilder.swift in Sources */,
+				3383924B69275B67474101CB /* ContentView.swift in Sources */,
+				CD764B3E1E17615B7A8E62BB /* DataStatsView.swift in Sources */,
+				CBB14F0C22CFDE5692471CB3 /* HomeView.swift in Sources */,
+				7CE80389CF0E400A92AB92E1 /* MacTunnelEngine.swift in Sources */,
+				86549269B798DE56BA04A496 /* MainTabView.swift in Sources */,
+				A8B3BE1AD0CEFA08D1047612 /* NetworkPingTester.swift in Sources */,
+				74664EF61AB5A36F8C949984 /* NodeEditorView.swift in Sources */,
+				3A6E43C4FB9DB51B08243A08 /* QRCodeScannerView.swift in Sources */,
+				FD627AFE1DD6BA2E81415CDD /* RoutingRule.swift in Sources */,
+				22CB3C8A9E011F466C96AF2A /* RoutingView.swift in Sources */,
+				982B5C9B197579D37A58638B /* ServerNode.swift in Sources */,
+				2035A55F298F99C1F1612549 /* SettingsView.swift in Sources */,
+				21CB4A3D1581AF1E27A9BD31 /* SubscriptionGroup.swift in Sources */,
+				0DB7D24FE8DEA3EFAADB9E1C /* SubscriptionParser.swift in Sources */,
+				2A17722E158A5C2FDD7EAAFC /* Theme.swift in Sources */,
+				A7E78EFE89D9B257D71ABC7B /* TunnelEngineProtocol.swift in Sources */,
+				26B2E805F44EC8A635F2B188 /* TunnelManager.swift in Sources */,
+				148B9E8ED3D4776A9D52D195 /* VortexApp.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C92F438F30A78400006EBDC4 /* Sources */ = {
+		E51A05B1913ABB1FAA6EBB24 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				425B03F1B2C25A6FA35E6F3E /* AppGroup.swift in Sources */,
+				A7F82ED33F88F1683F3E5E9F /* ConfigBuilder.swift in Sources */,
+				6E8DBB8FDFE3B139CF41B840 /* ContentView.swift in Sources */,
+				864CC495633EFBFF1B666689 /* DataStatsView.swift in Sources */,
+				D7EEBCAFF92C6BB02931C070 /* HomeView.swift in Sources */,
+				B1BEEAEBA962A7D498095FDA /* MacTunnelEngine.swift in Sources */,
+				6BF8D0F6FDE0EB57F7CABA93 /* MainTabView.swift in Sources */,
+				4DD8E2D61C4416A77025AFFF /* NetworkPingTester.swift in Sources */,
+				C9ADE053F835A33A304982FB /* NodeEditorView.swift in Sources */,
+				52E23391284D980F8450A0A7 /* QRCodeScannerView.swift in Sources */,
+				5BA302F516978124E597F841 /* RoutingRule.swift in Sources */,
+				87DE20B5281B0A7849CC8DBF /* RoutingView.swift in Sources */,
+				0781A930EE3153E66F4E3098 /* ServerNode.swift in Sources */,
+				130B1ACB76B873DB6AAC3BD3 /* SettingsView.swift in Sources */,
+				6147388E879F9212E7F51791 /* SubscriptionGroup.swift in Sources */,
+				7B3F5E0AFA8E345D7CC48D11 /* SubscriptionParser.swift in Sources */,
+				00BE4115821EF2C7C60B8F38 /* Theme.swift in Sources */,
+				C2F2E2ADEE993D378D67D225 /* TunnelEngineProtocol.swift in Sources */,
+				C24AA7DC1CF8CA1874B47AA1 /* TunnelManager.swift in Sources */,
+				82385E8447325FF3C8497BB1 /* VortexApp.swift in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C92F438B30A78400006EBDC4 /* PBXTargetDependency */ = {
+		6EE601DC302474B14B3D9ADA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C92F437B30A783FE006EBDC4 /* Vortex */;
-			targetProxy = C92F438A30A78400006EBDC4 /* PBXContainerItemProxy */;
-		};
-		C92F439530A78400006EBDC4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C92F437B30A783FE006EBDC4 /* Vortex */;
-			targetProxy = C92F439430A78400006EBDC4 /* PBXContainerItemProxy */;
+			target = 44D869F19BF021E560194930 /* VortexTunnelExtension */;
+			targetProxy = 3736D3BA86C50F3B85379952 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		C92F439930A78400006EBDC4 /* Debug configuration for PBXProject "Vortex" */ = {
+		03221DB18AB3AAFFA831A87E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Vortex/Vortex.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2F3554K48N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Vortex;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Используется для сканирования QR-кодов серверов и подписок VPN";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex;
+				PRODUCT_NAME = Vortex;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0CBEC874520B2A757C707D9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Vortex/VortexMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Frameworks\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Vortex;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexMac;
+				PRODUCT_NAME = Vortex;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		10F747FBDDD7574CC81FDDA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Vortex/VortexMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Frameworks\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Vortex;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexMac;
+				PRODUCT_NAME = Vortex;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Debug;
+		};
+		6DD826C7879C3B0EC79C4E6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -277,18 +629,122 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B2B09D41CA4C0BF3A13C2336 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Vortex/Vortex.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2F3554K48N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Vortex;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Используется для сканирования QR-кодов серверов и подписок VPN";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex;
+				PRODUCT_NAME = Vortex;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA758DD89670C2163F011244 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = VortexTunnelExtension/VortexTunnelExtension.entitlements;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Frameworks\"",
+				);
+				INFOPLIST_FILE = VortexTunnelExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex.tunnel;
+				PRODUCT_NAME = VortexTunnelExtension;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = appex;
+			};
+			name = Release;
+		};
+		DB698BC93E58F89F0EC4BCD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -296,259 +752,82 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		C92F439A30A78400006EBDC4 /* Release configuration for PBXProject "Vortex" */ = {
+		E0A24FF680AA33343FEF75F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
+				CODE_SIGN_ENTITLEMENTS = VortexTunnelExtension/VortexTunnelExtension.entitlements;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Frameworks\"",
+				);
+				INFOPLIST_FILE = VortexTunnelExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex.tunnel;
+				PRODUCT_NAME = VortexTunnelExtension;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		C92F439C30A78400006EBDC4 /* Debug configuration for PBXNativeTarget "Vortex" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = appex;
 			};
 			name = Debug;
-		};
-		C92F439D30A78400006EBDC4 /* Release configuration for PBXNativeTarget "Vortex" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.Vortex;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		C92F439F30A78400006EBDC4 /* Debug configuration for PBXNativeTarget "VortexTests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vortex.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vortex";
-			};
-			name = Debug;
-		};
-		C92F43A030A78400006EBDC4 /* Release configuration for PBXNativeTarget "VortexTests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vortex.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vortex";
-			};
-			name = Release;
-		};
-		C92F43A230A78400006EBDC4 /* Debug configuration for PBXNativeTarget "VortexUITests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Vortex;
-			};
-			name = Debug;
-		};
-		C92F43A330A78400006EBDC4 /* Release configuration for PBXNativeTarget "VortexUITests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2F3554K48N;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Kaider.VortexUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Vortex;
-			};
-			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C92F437730A783FE006EBDC4 /* Build configuration list for PBXProject "Vortex" */ = {
+		3DE47E8BE5BE0A7A2EB8B4E2 /* Build configuration list for PBXNativeTarget "Vortex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C92F439930A78400006EBDC4 /* Debug configuration for PBXProject "Vortex" */,
-				C92F439A30A78400006EBDC4 /* Release configuration for PBXProject "Vortex" */,
+				B2B09D41CA4C0BF3A13C2336 /* Debug */,
+				03221DB18AB3AAFFA831A87E /* Release */,
 			);
-			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
-		C92F439B30A78400006EBDC4 /* Build configuration list for PBXNativeTarget "Vortex" */ = {
+		42B7A853D0E7EF9E2BE3CFEB /* Build configuration list for PBXProject "Vortex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C92F439C30A78400006EBDC4 /* Debug configuration for PBXNativeTarget "Vortex" */,
-				C92F439D30A78400006EBDC4 /* Release configuration for PBXNativeTarget "Vortex" */,
+				DB698BC93E58F89F0EC4BCD0 /* Debug */,
+				6DD826C7879C3B0EC79C4E6F /* Release */,
 			);
-			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
-		C92F439E30A78400006EBDC4 /* Build configuration list for PBXNativeTarget "VortexTests" */ = {
+		CA9668DB6DE279F9450DEA09 /* Build configuration list for PBXNativeTarget "VortexTunnelExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C92F439F30A78400006EBDC4 /* Debug configuration for PBXNativeTarget "VortexTests" */,
-				C92F43A030A78400006EBDC4 /* Release configuration for PBXNativeTarget "VortexTests" */,
+				E0A24FF680AA33343FEF75F6 /* Debug */,
+				CA758DD89670C2163F011244 /* Release */,
 			);
-			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
-		C92F43A130A78400006EBDC4 /* Build configuration list for PBXNativeTarget "VortexUITests" */ = {
+		F100B0957434F8E242393850 /* Build configuration list for PBXNativeTarget "VortexMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C92F43A230A78400006EBDC4 /* Debug configuration for PBXNativeTarget "VortexUITests" */,
-				C92F43A330A78400006EBDC4 /* Release configuration for PBXNativeTarget "VortexUITests" */,
+				10F747FBDDD7574CC81FDDA8 /* Debug */,
+				0CBEC874520B2A757C707D9D /* Release */,
 			);
-			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C92F437430A783FE006EBDC4 /* Project object */;
-	validationLevel = 1;
+	rootObject = 7D927F64B6C4F00A05DEDE25 /* Project object */;
 }

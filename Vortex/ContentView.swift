@@ -1,24 +1,12 @@
-//
-//  ContentView.swift
-//  Vortex
-//
-//  Created by Kaider on 13.11.2026.
-//
-
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+@MainActor
+public struct ContentView: View {
+    @State private var tunnelManager = TunnelManager.shared
 
-#Preview {
-    ContentView()
+    public init() {}
+
+    public var body: some View {
+        MainTabView(tunnelManager: tunnelManager)
+    }
 }

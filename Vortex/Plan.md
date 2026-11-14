@@ -105,15 +105,33 @@ Strictly rule-based domain and IP routing (No Per-App VPN):
    - Decodes Base64 payload into an array of `ServerNode`.
 
 ### Phase 3: Configuration Builder (`Shared/Config/ConfigBuilder.swift`)
-1. Generate a valid `sing-box` JSON configuration from the currently selected `ServerNode`, `GlobalRoutingMode`, and `[RoutingRule]`.
-2. **Anti-Loop Protection (Critical):**
+1. [x] Generate a valid `sing-box` JSON configuration from the currently selected `ServerNode`, `GlobalRoutingMode`, and `[RoutingRule]`.
+2. [x] **Anti-Loop Protection (Critical):**
    - Automatically extract the IP/domain of the active VPN server and all VK Call signaling/TURN domains (`*.vk.com`, `*.mycdn.me`, `*.userapi.com` when `vkCall` mode is active) and place them at the very top of the routing table with action `direct`.
-3. **DNS Routing:**
+3. [x] **Modern Sing-box Rule-Set Architecture (1.8+ / 1.10+):**
+   - Completely eliminate deprecated `route.geoip` and `route.geosite` monolithic `.db` keys to prevent iOS Packet Tunnel OOM crashes (>50 MB).
+   - Use modern `route.rule_set` with `type: "local"` and `format: "binary"` pointing to `<AppGroup>/RuleSets/*.srs`.
+   - Strict fallback protection: unverified or missing `.srs` files are safely omitted from `rule_set` and `route.rules`.
+4. [x] **DNS Routing:**
    - Remote DNS (`https://1.1.1.1/dns-query`) detained via `proxy` outbound.
    - Direct DNS (`77.88.8.8`) detained via `direct` outbound for `.ru` domains and server hostname resolution.
-4. **TUN Settings:**
+5. [x] **TUN Settings:**
    - Virtual subnet: `172.19.0.1/30`.
    - MTU: `1280` (mandatory when using `vkCall` due to STUN/TURN/WebRTC header overhead; configurable up to `1400` for pure VLESS).
+
+### Phase 3.5: Binary Rule Sets (.srs) & Offline-First Management (`RuleSetManager.swift`)
+1. [x] **Bundled Offline Rule Sets:**
+   - Pre-pack lightweight compiled binary `.srs` files into application resources (`geoip-ru.srs`, `geosite-category-ru.srs`, `geosite-category-ads-all.srs`, total < 70 KB).
+2. [x] **Integrity & Compatibility Validation:**
+   - Enforce `validateSRSFile(at: URL)` ensuring size > 512B and ASCII magic header `[0x53, 0x52, 0x53]` (`"SRS"`), preventing HTML error pages / TSPU blocks from corrupting local rule sets.
+3. [x] **Atomic Updates with Fallback Mirrors:**
+   - Download fresh rule sets supporting primary GitHub and resilient CDN/proxy mirrors (`fastly.jsdelivr.net`, `mirror.ghproxy.com`).
+   - Validate before atomic file swap and update `AppGroup.userDefaults` metadata (`lastRuleSetUpdateDate`, `ruleSetFileSizes`).
+   - Hot-reload active tunnel via `TunnelManager.reloadRules()` and IPC message `.reloadRules`.
+4. [x] **Automatic Background Updates:**
+   - Configurable auto-update (default every 7 days / 604,800 sec) executed on startup and app foregrounding.
+5. [x] **Shadowrocket-Styled UI Integration (`RuleSetsCardView`):**
+   - File status rows with availability badges, KB sizes, auto-update toggle, last update timestamp, and "Обновить базы сейчас" button with progress spinner in both `RoutingView.swift` and `SettingsView.swift`.
 
 ### Phase 4: Minimalist Shadowrocket-Style UI (`VortexApp`)
 Build the interface in dark mode (`Color.black` background, `#1C1C1E` grouped cards, `#FF9500` orange selection dots, `#34C759` / `#007AFF` accents)[cite: 1]:

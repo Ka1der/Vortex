@@ -62,6 +62,32 @@ public enum AppGroup {
         return containerURL.appendingPathComponent("tunnel.log")
     }
 
+    // MARK: - Rule-Set File URLs (sing-box 1.8+ / 1.10+)
+
+    /// Directory inside App Group container where active binary rule-set (.srs) files reside
+    public static var rulesDirectoryURL: URL {
+        let dir = containerURL.appendingPathComponent("rules", isDirectory: true)
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
+        }
+        return dir
+    }
+
+    /// Path to binary geoip-ru.srs
+    public static var geoipRuURL: URL {
+        return rulesDirectoryURL.appendingPathComponent("geoip-ru.srs")
+    }
+
+    /// Path to binary geosite-category-ru.srs
+    public static var geositeRuURL: URL {
+        return rulesDirectoryURL.appendingPathComponent("geosite-category-ru.srs")
+    }
+
+    /// Path to binary geosite-category-ads-all.srs
+    public static var geositeAdsURL: URL {
+        return rulesDirectoryURL.appendingPathComponent("geosite-category-ads-all.srs")
+    }
+
     // MARK: - Keys
 
     public enum Keys {

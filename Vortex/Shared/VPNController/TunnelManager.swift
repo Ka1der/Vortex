@@ -48,7 +48,10 @@ public final class TunnelManager {
         // 1. Load persistent data from AppGroup and purge any legacy dummy servers
         loadDataFromStorage()
 
-        // 2. Setup mock engine callbacks
+        // 2. Ensure binary rule-sets (.srs) are present in AppGroup storage
+        RuleSetManager.setupRuleSets()
+
+        // 3. Setup mock engine callbacks
         Task { [weak self, mockEngine] in
             await mockEngine.setStatusChangeHandler { [weak self] newStatus in
                 Task { @MainActor in
@@ -229,6 +232,9 @@ public final class TunnelManager {
 
         self.errorMessage = nil
         self.status = .connecting
+
+        // Ensure binary rule-sets (.srs) are provisioned
+        RuleSetManager.setupRuleSets()
 
         // 1. Build and save sing-box configuration in shared container
         let configJSON = try ConfigBuilder.buildConfig(

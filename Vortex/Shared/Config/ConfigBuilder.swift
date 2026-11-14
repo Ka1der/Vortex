@@ -386,40 +386,49 @@ public enum ConfigBuilder {
         let autoDetect = true
         #endif
 
-        // 4. Mode-specific dispatch
+        // 4. Rule-Set registration (sing-box 1.8+ / 1.10+ binary .srs format)
+        // Avoid monolithic .db files which cause OOM (> 50 MB) in iOS Packet Tunnel Provider.
+        var ruleSets: [[String: Any]] = []
+        var registeredRuleSetTags: Set<String> = []
+
+        let standardRuleSets: [(tag: String, url: URL)] = [
+            ("geoip-ru", AppGroup.geoipRuURL),
+            ("geosite-ru", AppGroup.geositeRuURL),
+            ("geosite-ads", AppGroup.geositeAdsURL)
+        ]
+
+        for (tag, fileURL) in standardRuleSets {
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                ruleSets.append([
+                    "tag": tag,
+                    "type": "local",
+                    "format": "binary",
+                    "path": fileURL.path
+                ])
+                registeredRuleSetTags.insert(tag)
+            }
+        }
+
+        // 5. Mode-specific dispatch & user rules
+        let finalOutbound: String
         switch mode {
         case .direct:
-            // Entire traffic routes directly
             routeRules.append([
                 "outbound": "direct-out"
             ])
-            return [
-                "auto_detect_interface": autoDetect,
-                "final": "direct-out",
-                "rules": routeRules
-            ]
+            finalOutbound = "direct-out"
 
         case .block:
-            // Entire traffic drops
             routeRules.append([
                 "outbound": "block-out"
             ])
-            return [
-                "auto_detect_interface": autoDetect,
-                "final": "block-out",
-                "rules": routeRules
-            ]
+            finalOutbound = "block-out"
 
         case .proxy:
-            // Global proxy: all non-anti-loop traffic routes via VPN outbound
-            return [
-                "auto_detect_interface": autoDetect,
-                "final": "proxy-out",
-                "rules": routeRules
-            ]
+            finalOutbound = "proxy-out"
 
         case .config:
-            // Rule-based routing: evaluate user-configured domain/IP/Geo rules
+            finalOutbound = "proxy-out"
             for rule in rules where rule.isEnabled {
                 let targetOutbound = rule.action.outboundTag
                 switch rule.type {
@@ -444,24 +453,75 @@ public enum ConfigBuilder {
                         "outbound": targetOutbound
                     ])
                 case .geoip:
-                    routeRules.append([
-                        "geoip": [rule.value],
-                        "outbound": targetOutbound
-                    ])
+                    let val = rule.value.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+                    let tag: String
+                    if val == "ru" {
+                        tag = "geoip-ru"
+                    } else {
+                        tag = "geoip-\(val)"
+                        let customURL = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
+                        if FileManager.default.fileExists(atPath: customURL.path) && !registeredRuleSetTags.contains(tag) {
+                            ruleSets.append([
+                                "tag": tag,
+                                "type": "local",
+                                "format": "binary",
+                                "path": customURL.path
+                            ])
+                            registeredRuleSetTags.insert(tag)
+                        }
+                    }
+
+                    // Fallback protection: only reference rule_set if the file exists and was registered!
+                    if registeredRuleSetTags.contains(tag) {
+                        routeRules.append([
+                            "rule_set": [tag],
+                            "outbound": targetOutbound
+                        ])
+                    }
+
                 case .geosite:
-                    routeRules.append([
-                        "geosite": [rule.value],
-                        "outbound": targetOutbound
-                    ])
+                    let val = rule.value.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+                    let tag: String
+                    if val == "ru" || val == "category-ru" {
+                        tag = "geosite-ru"
+                    } else if val == "category-ads-all" || val == "ads" {
+                        tag = "geosite-ads"
+                    } else {
+                        tag = "geosite-\(val)"
+                        let customURL = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
+                        if FileManager.default.fileExists(atPath: customURL.path) && !registeredRuleSetTags.contains(tag) {
+                            ruleSets.append([
+                                "tag": tag,
+                                "type": "local",
+                                "format": "binary",
+                                "path": customURL.path
+                            ])
+                            registeredRuleSetTags.insert(tag)
+                        }
+                    }
+
+                    // Fallback protection: only reference rule_set if the file exists and was registered!
+                    if registeredRuleSetTags.contains(tag) {
+                        routeRules.append([
+                            "rule_set": [tag],
+                            "outbound": targetOutbound
+                        ])
+                    }
                 }
             }
-
-            return [
-                "auto_detect_interface": autoDetect,
-                "final": "proxy-out",
-                "rules": routeRules
-            ]
         }
+
+        var routeDict: [String: Any] = [
+            "auto_detect_interface": autoDetect,
+            "final": finalOutbound,
+            "rules": routeRules
+        ]
+
+        if !ruleSets.isEmpty {
+            routeDict["rule_set"] = ruleSets
+        }
+
+        return routeDict
     }
 
     /// Critical anti-loop rules guaranteeing VPN server packets and signaling never loop into the TUN interface

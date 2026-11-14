@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10000000000000000000002 /* RuleSetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* RuleSetManager.swift */; };
+		A10000000000000000000003 /* RuleSetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* RuleSetManager.swift */; };
+		A10000000000000000000004 /* RuleSetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* RuleSetManager.swift */; };
 		00BE4115821EF2C7C60B8F38 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0CA708C501DCAE350AC640 /* Theme.swift */; };
 		04A0790B7B5E6F4C7987044A /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0A88F0CA02A2352920E780 /* PacketTunnelProvider.swift */; };
 		0781A930EE3153E66F4E3098 /* ServerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287BE5D0A71CEA5F5547632 /* ServerNode.swift */; };
@@ -67,6 +70,12 @@
 		DA2289F979DD7C254BC89ECD /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0807E48C00F449F799669105 /* AppGroup.swift */; };
 		E556EB612FCED3E65675B39B /* Plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 77B22729B20FCD7FBC00446D /* Plan.md */; };
 		FD627AFE1DD6BA2E81415CDD /* RoutingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769A6847B952B19C2144175 /* RoutingRule.swift */; };
+		A10000000000000000000024 /* geoip-ru.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* geoip-ru.srs */; };
+		A10000000000000000000025 /* geosite-category-ru.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* geosite-category-ru.srs */; };
+		A10000000000000000000026 /* geosite-category-ads-all.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* geosite-category-ads-all.srs */; };
+		A10000000000000000000027 /* geoip-ru.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* geoip-ru.srs */; };
+		A10000000000000000000028 /* geosite-category-ru.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* geosite-category-ru.srs */; };
+		A10000000000000000000029 /* geosite-category-ads-all.srs in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* geosite-category-ads-all.srs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +125,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A10000000000000000000001 /* RuleSetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleSetManager.swift; sourceTree = "<group>"; };
+		A10000000000000000000011 /* RuleSetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleSetManager.swift; sourceTree = "<group>"; };
 		00CC7BDD99FF6A56F984280E /* SubscriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionGroup.swift; sourceTree = "<group>"; };
 		059D7CA9F1874D9B513FF292 /* SubscriptionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionParser.swift; sourceTree = "<group>"; };
 		0807E48C00F449F799669105 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
@@ -157,6 +168,9 @@
 		F74200C2B2A89E5D6D1D06CE /* NetworkPingTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPingTester.swift; sourceTree = "<group>"; };
 		FD948030D2D02364749D2F4F /* VortexMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VortexMac.entitlements; sourceTree = "<group>"; };
 		FDB73DF124DD4F59C82CC491 /* ServerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerNode.swift; sourceTree = "<group>"; };
+		A10000000000000000000021 /* geoip-ru.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geoip-ru.srs"; sourceTree = "<group>"; };
+		A10000000000000000000022 /* geosite-category-ru.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-category-ru.srs"; sourceTree = "<group>"; };
+		A10000000000000000000023 /* geosite-category-ads-all.srs */ = {isa = PBXFileReference; lastKnownFileType = file; path = "geosite-category-ads-all.srs"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +263,7 @@
 		59ED8EBC8C178C0155F390C5 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000001 /* RuleSetManager.swift */,
 				E0363E646B3BB07466EC82F6 /* AppGroup.swift */,
 				53B7F7C9346A0C83172B3F01 /* ConfigBuilder.swift */,
 				059D7CA9F1874D9B513FF292 /* SubscriptionParser.swift */,
@@ -298,6 +313,7 @@
 		A9309F5203CA647A1FB6A789 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000011 /* RuleSetManager.swift */,
 				0807E48C00F449F799669105 /* AppGroup.swift */,
 				827CE548832A7036E6FEDFD8 /* ConfigBuilder.swift */,
 				F1DBFB13D834634F159E0C2D /* SubscriptionParser.swift */,
@@ -318,6 +334,7 @@
 		DE749C145120BD340FF53048 /* Vortex */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000020 /* RuleSets */,
 				153F6D4CB01AB96768A70AD8 /* Assets.xcassets */,
 				9D2D22005CB2C6DCD14BBE64 /* ContentView.swift */,
 				77B22729B20FCD7FBC00446D /* Plan.md */,
@@ -328,6 +345,16 @@
 				57F7F6E1D839540AC33EB986 /* Views */,
 			);
 			path = Vortex;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000020 /* RuleSets */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000021 /* geoip-ru.srs */,
+				A10000000000000000000022 /* geosite-category-ru.srs */,
+				A10000000000000000000023 /* geosite-category-ads-all.srs */,
+			);
+			path = Resources/RuleSets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,6 +454,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000024 /* geoip-ru.srs in Resources */,
+				A10000000000000000000025 /* geosite-category-ru.srs in Resources */,
+				A10000000000000000000026 /* geosite-category-ads-all.srs in Resources */,
 				866AD8679D590257B0601132 /* Assets.xcassets in Resources */,
 				3EC4626833F1C7B4190597E9 /* Plan.md in Resources */,
 			);
@@ -436,6 +466,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000027 /* geoip-ru.srs in Resources */,
+				A10000000000000000000028 /* geosite-category-ru.srs in Resources */,
+				A10000000000000000000029 /* geosite-category-ads-all.srs in Resources */,
 				C9782C89310C2CFC21EA4B3D /* Assets.xcassets in Resources */,
 				E556EB612FCED3E65675B39B /* Plan.md in Resources */,
 			);
@@ -448,6 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000002 /* RuleSetManager.swift in Sources */,
 				7351E664A764928DD9EAF200 /* AppGroup.swift in Sources */,
 				1A96427472E573468841199B /* ConfigBuilder.swift in Sources */,
 				3498DAAA80E410E0218CCE33 /* MacTunnelEngine.swift in Sources */,
@@ -466,6 +500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000004 /* RuleSetManager.swift in Sources */,
 				DA2289F979DD7C254BC89ECD /* AppGroup.swift in Sources */,
 				D7BB0EFC14AA9F2DE3F2BEEC /* ConfigBuilder.swift in Sources */,
 				3383924B69275B67474101CB /* ContentView.swift in Sources */,
@@ -493,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000003 /* RuleSetManager.swift in Sources */,
 				425B03F1B2C25A6FA35E6F3E /* AppGroup.swift in Sources */,
 				A7F82ED33F88F1683F3E5E9F /* ConfigBuilder.swift in Sources */,
 				6E8DBB8FDFE3B139CF41B840 /* ContentView.swift in Sources */,

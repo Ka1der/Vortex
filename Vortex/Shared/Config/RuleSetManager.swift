@@ -52,6 +52,8 @@ public enum RuleSetManager {
                     try? fileManager.copyItem(at: resourceURL, to: info.targetURL)
                 } else if let nestedURL = Bundle.main.resourceURL?.appendingPathComponent("RuleSets/\(info.filename)"), fileManager.fileExists(atPath: nestedURL.path) {
                     try? fileManager.copyItem(at: nestedURL, to: info.targetURL)
+                } else if let sharedURL = Bundle.main.resourceURL?.appendingPathComponent("Shared/Resources/RuleSets/\(info.filename)"), fileManager.fileExists(atPath: sharedURL.path) {
+                    try? fileManager.copyItem(at: sharedURL, to: info.targetURL)
                 }
             }
         }

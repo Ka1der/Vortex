@@ -1,110 +1,335 @@
 import Foundation
+import Observation
 
-/// Coordinates loading, validation, and remote updating of binary Sing-box Rule Sets (.srs)
-public enum RuleSetManager {
+/// Service managing binary Sing-box Rule Sets (.srs) inside the App Group container.
+/// Supports bundled initialization, atomic updates with fallback mirrors, SRS binary validation,
+/// and scheduled/background auto-refresh.
+@Observable
+@MainActor
+public final class RuleSetManager {
 
-    public struct RuleSetInfo: Sendable {
+    public static let shared = RuleSetManager()
+
+    /// Descriptor for a standard Rule Set
+    public struct RuleSetItem: Sendable {
         public let tag: String
         public let filename: String
         public let targetURL: URL
-        public let remoteURL: URL
+        public let primaryURL: URL
+        public let mirrorURLs: [URL]
 
         public var exists: Bool {
             FileManager.default.fileExists(atPath: targetURL.path)
         }
     }
 
-    public static let standardRuleSets: [RuleSetInfo] = [
-        RuleSetInfo(
+    /// Default list of production rule sets used by Vortex
+    nonisolated public static let standardRuleSets: [RuleSetItem] = [
+        RuleSetItem(
             tag: "geoip-ru",
             filename: "geoip-ru.srs",
             targetURL: AppGroup.geoipRuURL,
-            remoteURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs")!
+            primaryURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs")!,
+            mirrorURLs: [
+                URL(string: "https://fastly.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-ru.srs")!,
+                URL(string: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs")!
+            ]
         ),
-        RuleSetInfo(
+        RuleSetItem(
             tag: "geosite-ru",
             filename: "geosite-category-ru.srs",
             targetURL: AppGroup.geositeRuURL,
-            remoteURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ru.srs")!
+            primaryURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ru.srs")!,
+            mirrorURLs: [
+                URL(string: "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ru.srs")!,
+                URL(string: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ru.srs")!
+            ]
         ),
-        RuleSetInfo(
+        RuleSetItem(
             tag: "geosite-ads",
             filename: "geosite-category-ads-all.srs",
             targetURL: AppGroup.geositeAdsURL,
-            remoteURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs")!
+            primaryURL: URL(string: "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs")!,
+            mirrorURLs: [
+                URL(string: "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs")!,
+                URL(string: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs")!
+            ]
         )
     ]
 
-    /// Ensures all standard rule-set (.srs) files are present in the App Group rules directory.
-    /// If not present, copies from Bundle resources or downloads.
-    public static func setupRuleSets() {
-        let fileManager = FileManager.default
+    /// Default update interval: 7 days in seconds (604,800 sec)
+    public static let defaultUpdateInterval: TimeInterval = 7 * 24 * 3600
 
-        // Ensure directory exists
+    // MARK: - Observable UI State
+
+    public private(set) var isUpdating: Bool = false
+    public private(set) var lastUpdateDate: Date?
+    public private(set) var lastErrorMessage: String?
+    public private(set) var fileSizes: [String: Int64] = [:]
+
+    /// Callback invoked when rule-sets have been updated and a reload of active tunnel is requested
+    public var onRuleSetsReloadRequested: (() async -> Void)?
+
+    /// Whether automatic background rule-set updates are enabled
+    public var autoUpdateRuleSets: Bool {
+        didSet {
+            AppGroup.userDefaults.set(autoUpdateRuleSets, forKey: AppGroup.Keys.autoUpdateRuleSets)
+        }
+    }
+
+    /// Interval between automatic updates in seconds
+    public var updateInterval: TimeInterval {
+        didSet {
+            AppGroup.userDefaults.set(updateInterval, forKey: AppGroup.Keys.ruleSetUpdateInterval)
+        }
+    }
+
+    // MARK: - Lifecycle
+
+    public init() {
+        let defaults = AppGroup.userDefaults
+        let autoUpdate = defaults.object(forKey: AppGroup.Keys.autoUpdateRuleSets) as? Bool ?? true
+        let interval = defaults.double(forKey: AppGroup.Keys.ruleSetUpdateInterval)
+        self.autoUpdateRuleSets = autoUpdate
+        self.updateInterval = interval > 0 ? interval : Self.defaultUpdateInterval
+
+        if let timestamp = defaults.object(forKey: AppGroup.Keys.lastRuleSetUpdateDate) as? Date {
+            self.lastUpdateDate = timestamp
+        } else if let timeDouble = defaults.object(forKey: AppGroup.Keys.lastRuleSetUpdateDate) as? Double, timeDouble > 0 {
+            self.lastUpdateDate = Date(timeIntervalSince1970: timeDouble)
+        }
+
+        if let storedSizes = defaults.dictionary(forKey: AppGroup.Keys.ruleSetFileSizes) as? [String: Int64] {
+            self.fileSizes = storedSizes
+        } else {
+            self.refreshFileSizes()
+        }
+    }
+
+    // MARK: - 1. App Group Initialization (Bundled Rules)
+
+    /// Ensures bundled .srs files are copied into <AppGroup>/RuleSets/ if not present
+    public func ensureBundledRulesCopied() {
+        let fileManager = FileManager.default
         _ = AppGroup.rulesDirectoryURL
 
-        for info in standardRuleSets {
-            if !info.exists {
-                // Try copying from main app bundle or resource subdirectories
-                if let bundleURL = Bundle.main.url(forResource: (info.filename as NSString).deletingPathExtension, withExtension: "srs") {
-                    try? fileManager.copyItem(at: bundleURL, to: info.targetURL)
-                } else if let resourceURL = Bundle.main.resourceURL?.appendingPathComponent(info.filename), fileManager.fileExists(atPath: resourceURL.path) {
-                    try? fileManager.copyItem(at: resourceURL, to: info.targetURL)
-                } else if let nestedURL = Bundle.main.resourceURL?.appendingPathComponent("RuleSets/\(info.filename)"), fileManager.fileExists(atPath: nestedURL.path) {
-                    try? fileManager.copyItem(at: nestedURL, to: info.targetURL)
-                } else if let sharedURL = Bundle.main.resourceURL?.appendingPathComponent("Shared/Resources/RuleSets/\(info.filename)"), fileManager.fileExists(atPath: sharedURL.path) {
-                    try? fileManager.copyItem(at: sharedURL, to: info.targetURL)
+        // Migration check from legacy rules/ directory
+        let legacyRulesDir = AppGroup.containerURL.appendingPathComponent("rules", isDirectory: true)
+
+        for item in Self.standardRuleSets {
+            if !item.exists || !Self.validateSRSFile(at: item.targetURL) {
+                let legacyFile = legacyRulesDir.appendingPathComponent(item.filename)
+                if fileManager.fileExists(atPath: legacyFile.path) && Self.validateSRSFile(at: legacyFile) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: legacyFile, to: item.targetURL)
+                } else if let bundleURL = Bundle.main.url(forResource: (item.filename as NSString).deletingPathExtension, withExtension: "srs"),
+                          Self.validateSRSFile(at: bundleURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: bundleURL, to: item.targetURL)
+                } else if let resourceURL = Bundle.main.resourceURL?.appendingPathComponent(item.filename),
+                          fileManager.fileExists(atPath: resourceURL.path),
+                          Self.validateSRSFile(at: resourceURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: resourceURL, to: item.targetURL)
+                } else if let nestedURL = Bundle.main.resourceURL?.appendingPathComponent("RuleSets/\(item.filename)"),
+                          fileManager.fileExists(atPath: nestedURL.path),
+                          Self.validateSRSFile(at: nestedURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: nestedURL, to: item.targetURL)
+                } else if let sharedURL = Bundle.main.resourceURL?.appendingPathComponent("Shared/Resources/RuleSets/\(item.filename)"),
+                          fileManager.fileExists(atPath: sharedURL.path),
+                          Self.validateSRSFile(at: sharedURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: sharedURL, to: item.targetURL)
+                }
+            }
+        }
+
+        refreshFileSizes()
+    }
+
+    /// Backwards compatible static seeding helper for background threads or tunnel start
+    nonisolated public static func setupRuleSets() {
+        let fileManager = FileManager.default
+        _ = AppGroup.rulesDirectoryURL
+
+        let legacyRulesDir = AppGroup.containerURL.appendingPathComponent("rules", isDirectory: true)
+
+        for item in standardRuleSets {
+            if !item.exists || !validateSRSFile(at: item.targetURL) {
+                let legacyFile = legacyRulesDir.appendingPathComponent(item.filename)
+                if fileManager.fileExists(atPath: legacyFile.path) && validateSRSFile(at: legacyFile) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: legacyFile, to: item.targetURL)
+                } else if let bundleURL = Bundle.main.url(forResource: (item.filename as NSString).deletingPathExtension, withExtension: "srs"),
+                          validateSRSFile(at: bundleURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: bundleURL, to: item.targetURL)
+                } else if let resourceURL = Bundle.main.resourceURL?.appendingPathComponent(item.filename),
+                          fileManager.fileExists(atPath: resourceURL.path),
+                          validateSRSFile(at: resourceURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: resourceURL, to: item.targetURL)
+                } else if let nestedURL = Bundle.main.resourceURL?.appendingPathComponent("RuleSets/\(item.filename)"),
+                          fileManager.fileExists(atPath: nestedURL.path),
+                          validateSRSFile(at: nestedURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: nestedURL, to: item.targetURL)
+                } else if let sharedURL = Bundle.main.resourceURL?.appendingPathComponent("Shared/Resources/RuleSets/\(item.filename)"),
+                          fileManager.fileExists(atPath: sharedURL.path),
+                          validateSRSFile(at: sharedURL) {
+                    _ = try? fileManager.removeItem(at: item.targetURL)
+                    try? fileManager.copyItem(at: sharedURL, to: item.targetURL)
                 }
             }
         }
     }
 
+    // MARK: - 2. Compatibility Validation
+
+    /// Validates that a file exceeds 512 bytes and starts with the "SRS" magic binary signature [0x53, 0x52, 0x53]
+    nonisolated public static func validateSRSFile(at fileURL: URL) -> Bool {
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: fileURL.path),
+              let size = attributes[.size] as? Int64,
+              size > 512 else {
+            return false
+        }
+
+        guard let handle = try? FileHandle(forReadingFrom: fileURL) else {
+            return false
+        }
+        defer { try? handle.close() }
+
+        let magic = handle.readData(ofLength: 3)
+        return magic == Data([0x53, 0x52, 0x53]) // ASCII "SRS"
+    }
+
+    /// Instance validation wrapper
+    public func validateSRSFile(at fileURL: URL) -> Bool {
+        return Self.validateSRSFile(at: fileURL)
+    }
+
+    // MARK: - 3. Manual Update
+
+    /// Downloads the latest .srs binary rule-sets with fallback mirrors, validates integrity, and atomically swaps files
+    @discardableResult
+    public func updateAllRuleSets(force: Bool = false) async -> Bool {
+        guard !isUpdating else { return false }
+        isUpdating = true
+        lastErrorMessage = nil
+        defer { isUpdating = false }
+
+        var anyUpdated = false
+        var allSucceeded = true
+
+        let config = URLSessionConfiguration.ephemeral
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 30
+        let session = URLSession(configuration: config)
+
+        for item in Self.standardRuleSets {
+            var downloadSuccess = false
+            let candidateURLs = [item.primaryURL] + item.mirrorURLs
+
+            for url in candidateURLs {
+                do {
+                    let (tempDownloadedURL, response) = try await session.download(from: url)
+                    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                        try? FileManager.default.removeItem(at: tempDownloadedURL)
+                        continue
+                    }
+
+                    if Self.validateSRSFile(at: tempDownloadedURL) {
+                        let destURL = item.targetURL
+                        let tempDestURL = destURL.deletingLastPathComponent().appendingPathComponent(UUID().uuidString + ".tmp")
+
+                        try FileManager.default.moveItem(at: tempDownloadedURL, to: tempDestURL)
+                        if FileManager.default.fileExists(atPath: destURL.path) {
+                            _ = try? FileManager.default.removeItem(at: destURL)
+                        }
+                        try FileManager.default.moveItem(at: tempDestURL, to: destURL)
+
+                        downloadSuccess = true
+                        anyUpdated = true
+                        break
+                    } else {
+                        try? FileManager.default.removeItem(at: tempDownloadedURL)
+                    }
+                } catch {
+                    continue
+                }
+            }
+
+            if !downloadSuccess {
+                allSucceeded = false
+            }
+        }
+
+        refreshFileSizes()
+
+        if anyUpdated || allSucceeded {
+            let now = Date()
+            self.lastUpdateDate = now
+            AppGroup.userDefaults.set(now, forKey: AppGroup.Keys.lastRuleSetUpdateDate)
+            AppGroup.userDefaults.set(self.fileSizes, forKey: AppGroup.Keys.ruleSetFileSizes)
+
+            // If tunnel reload callback is registered, notify it
+            if let onRuleSetsReloadRequested {
+                await onRuleSetsReloadRequested()
+            }
+            return true
+        } else {
+            self.lastErrorMessage = "Не удалось обновить базы правил: серверы недоступны"
+            return false
+        }
+    }
+
+    // MARK: - 4. Automatic Background Update
+
+    /// Checks elapsed time since last update and performs background refresh if elapsed time exceeds interval
+    public func checkAndAutoUpdateIfNeeded() async {
+        guard autoUpdateRuleSets else { return }
+
+        let last = lastUpdateDate ?? .distantPast
+        let elapsed = Date().timeIntervalSince(last)
+
+        if elapsed >= updateInterval {
+            _ = await updateAllRuleSets(force: false)
+        }
+    }
+
+    // MARK: - Helpers
+
     /// Checks if a specific rule-set tag has an existing valid .srs binary file on disk
-    public static func isRuleSetAvailable(tag: String) -> Bool {
-        if let info = standardRuleSets.first(where: { $0.tag == tag }) {
-            return info.exists
+    nonisolated public static func isRuleSetAvailable(tag: String) -> Bool {
+        if let item = standardRuleSets.first(where: { $0.tag == tag }) {
+            return item.exists && validateSRSFile(at: item.targetURL)
         }
         let customFile = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
-        return FileManager.default.fileExists(atPath: customFile.path)
+        return FileManager.default.fileExists(atPath: customFile.path) && validateSRSFile(at: customFile)
     }
 
     /// Returns the absolute path for a rule-set if it exists on disk, or nil if missing
-    public static func path(for tag: String) -> String? {
-        if let info = standardRuleSets.first(where: { $0.tag == tag }), info.exists {
-            return info.targetURL.path
+    nonisolated public static func path(for tag: String) -> String? {
+        if let item = standardRuleSets.first(where: { $0.tag == tag }), item.exists && validateSRSFile(at: item.targetURL) {
+            return item.targetURL.path
         }
         let customFile = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
-        if FileManager.default.fileExists(atPath: customFile.path) {
+        if FileManager.default.fileExists(atPath: customFile.path) && validateSRSFile(at: customFile) {
             return customFile.path
         }
         return nil
     }
 
-    /// Asynchronously downloads and refreshes all standard rule-set binaries from remote repository
-    public static func updateRuleSets() async throws {
-        let session = URLSession.shared
-        let fileManager = FileManager.default
-
-        for info in standardRuleSets {
-            let (tempURL, response) = try await session.download(from: info.remoteURL)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                continue
+    /// Refreshes local cached file sizes from disk
+    public func refreshFileSizes() {
+        var sizes: [String: Int64] = [:]
+        for item in Self.standardRuleSets {
+            if let attrs = try? FileManager.default.attributesOfItem(atPath: item.targetURL.path),
+               let size = attrs[.size] as? Int64 {
+                sizes[item.tag] = size
             }
-
-            // Verify binary signature (first 3 bytes must be "SRS")
-            let handle = try FileHandle(forReadingFrom: tempURL)
-            let header = handle.readData(ofLength: 3)
-            try? handle.close()
-
-            guard header == Data([0x53, 0x52, 0x53]) else {
-                continue // Corrupted or invalid .srs file, skip overwrite
-            }
-
-            // Atomic move into destination
-            if fileManager.fileExists(atPath: info.targetURL.path) {
-                _ = try? fileManager.removeItem(at: info.targetURL)
-            }
-            try fileManager.moveItem(at: tempURL, to: info.targetURL)
         }
+        self.fileSizes = sizes
     }
 }

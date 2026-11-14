@@ -66,7 +66,7 @@ public enum AppGroup {
 
     /// Directory inside App Group container where active binary rule-set (.srs) files reside
     public static var rulesDirectoryURL: URL {
-        let dir = containerURL.appendingPathComponent("rules", isDirectory: true)
+        let dir = containerURL.appendingPathComponent("RuleSets", isDirectory: true)
         if !FileManager.default.fileExists(atPath: dir.path) {
             try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
         }
@@ -101,6 +101,10 @@ public enum AppGroup {
         public static let memoryUsageBytes = "vortex_memory_usage_bytes"
         public static let txBytes = "vortex_tx_bytes"
         public static let rxBytes = "vortex_rx_bytes"
+        public static let lastRuleSetUpdateDate = "vortex_last_ruleset_update_date"
+        public static let autoUpdateRuleSets = "vortex_auto_update_rulesets"
+        public static let ruleSetUpdateInterval = "vortex_ruleset_update_interval"
+        public static let ruleSetFileSizes = "vortex_ruleset_file_sizes"
     }
 
     // MARK: - Configuration Persistence

@@ -169,7 +169,7 @@ public final class PacketTunnelProvider: NEPacketTunnelProvider, @unchecked Send
             ]
             replyJSON(response, completionHandler: completionHandler)
 
-        case .reloadConfig:
+        case .reloadConfig, .reloadRules:
             // Re-read active config from shared container
             let newConfig = AppGroup.loadSingBoxConfig()
             NSLog("[VortexExtension] Reloaded configuration from AppGroup: %lu bytes", UInt(newConfig?.count ?? 0))

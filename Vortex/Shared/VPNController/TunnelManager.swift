@@ -48,7 +48,11 @@ public final class TunnelManager {
         // 1. Load persistent data from AppGroup and purge any legacy dummy servers
         loadDataFromStorage()
 
-        // 2. Ensure binary rule-sets (.srs) are present in AppGroup storage
+        // 2. Ensure binary rule-sets (.srs) are present in AppGroup storage & wire reload callback
+        RuleSetManager.shared.onRuleSetsReloadRequested = { [weak self] in
+            guard let self, self.status == .connected else { return }
+            await self.reloadRules()
+        }
         RuleSetManager.setupRuleSets()
 
         // 3. Setup mock engine callbacks
@@ -363,6 +367,13 @@ public final class TunnelManager {
         }
     }
 
+    /// Reloads routing rules and notifies the packet tunnel provider
+    public func reloadRules() async {
+        guard status == .connected else { return }
+        await reloadActiveConfig()
+        _ = try? await sendProviderMessage(command: .reloadRules)
+    }
+
     // MARK: - Node Management
 
     public func addLocalNode(_ node: ServerNode) {
@@ -548,7 +559,7 @@ public final class TunnelManager {
                     "rxBytes": stats.rxBytes,
                     "memoryBytes": stats.memoryBytes
                 ]
-            case .reloadConfig:
+            case .reloadConfig, .reloadRules:
                 return ["success": true]
             case .pingNode:
                 return ["latency": 45]

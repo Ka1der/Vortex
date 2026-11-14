@@ -398,7 +398,7 @@ public enum ConfigBuilder {
         ]
 
         for (tag, fileURL) in standardRuleSets {
-            if FileManager.default.fileExists(atPath: fileURL.path) {
+            if FileManager.default.fileExists(atPath: fileURL.path) && RuleSetManager.validateSRSFile(at: fileURL) {
                 ruleSets.append([
                     "tag": tag,
                     "type": "local",
@@ -460,7 +460,7 @@ public enum ConfigBuilder {
                     } else {
                         tag = "geoip-\(val)"
                         let customURL = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
-                        if FileManager.default.fileExists(atPath: customURL.path) && !registeredRuleSetTags.contains(tag) {
+                        if FileManager.default.fileExists(atPath: customURL.path) && RuleSetManager.validateSRSFile(at: customURL) && !registeredRuleSetTags.contains(tag) {
                             ruleSets.append([
                                 "tag": tag,
                                 "type": "local",
@@ -489,7 +489,7 @@ public enum ConfigBuilder {
                     } else {
                         tag = "geosite-\(val)"
                         let customURL = AppGroup.rulesDirectoryURL.appendingPathComponent("\(tag).srs")
-                        if FileManager.default.fileExists(atPath: customURL.path) && !registeredRuleSetTags.contains(tag) {
+                        if FileManager.default.fileExists(atPath: customURL.path) && RuleSetManager.validateSRSFile(at: customURL) && !registeredRuleSetTags.contains(tag) {
                             ruleSets.append([
                                 "tag": tag,
                                 "type": "local",

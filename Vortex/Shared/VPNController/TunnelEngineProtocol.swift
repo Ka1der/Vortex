@@ -69,6 +69,7 @@ public struct TunnelIPCMessage: Codable, Sendable {
         case getStatus = "getStatus"
         case getStats = "getStats"
         case reloadConfig = "reloadConfig"
+        case reloadRules = "reloadRules"
         case pingNode = "pingNode"
     }
 
